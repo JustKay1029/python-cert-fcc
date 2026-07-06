@@ -43,5 +43,45 @@ class Category:
         lines.append(f"Total: {self.get_balance():.2f}")
         return "\n".join(lines)
 
+
+#used ai / comet browser's assistant to write this portion becuase the OOPs concept is made clear above
+#below it's just "string - art" about spacing and writing which doesn't really contribute to learning
 def create_spend_chart(categories):
-    pass
+    lines = ["Percentage spent by category"]
+    spent_amounts = []
+    for category in categories:
+        spent = 0
+        for entry in category.ledger:
+            if entry["amount"] < 0:
+                spent += -entry["amount"]
+        spent_amounts.append(spent)
+    
+    total_spent = sum(spent_amounts)
+
+    percentages = []
+    for spent in spent_amounts:
+        percent = (spent / total_spent) * 100
+        percentages.append(int(percent // 10) * 10)
+
+    for i in range(100, -1, -10):
+        line = f"{i:>3}| "
+        for percent in percentages:
+            if percent >= i:
+                line += "o  "
+            else:
+                line += "   "
+        lines.append(line)
+
+    lines.append("    " + "-" * (len(categories) * 3 + 1))
+
+    max_len = max(len(category.name) for category in categories)
+    for i in range(max_len):
+        line = "     "
+        for category in categories:
+            if i < len(category.name):
+                line += category.name[i] + "  "
+            else:
+                line += "   "
+        lines.append(line)
+
+    return "\n".join(lines)
