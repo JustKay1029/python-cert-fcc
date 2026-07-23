@@ -42,7 +42,7 @@ class Employee:
             raise ValueError(f"'{self.level}' is already the selected level.")
         if hasattr(self, '_level') and Employee._base_salaries[new_level] < Employee._base_salaries[self.level]:
             raise ValueError("Cannot change to lower level.")
-        print(f"'{self.name}hasattr(' promoted to '{new_level}'.")
+        print(f"'{self.name}' promoted to '{new_level}'.")
         self.salary = Employee._base_salaries[new_level]
         self._level = new_level
 
@@ -54,9 +54,8 @@ class Employee:
     def salary(self, new_salary):
         if not isinstance(new_salary, (int, float)):
             raise TypeError("'salary' must be a number.")
-        if hasattr(self, '_level'):
-            if new_salary < Employee._base_salaries[self._level]:
-                raise ValueError(f"Salary must be higher than minimum salary ${Employee._base_salaries[self._level]}.")
+        if hasattr(self, '_level') and new_salary < Employee._base_salaries[self.level]:
+            raise ValueError(f'Salary must be higher than minimum salary ${Employee._base_salaries[self.level]}.')
         self._salary = new_salary
         print(f'Salary updated to ${self.salary}.')
 
@@ -64,5 +63,3 @@ charlie_brown = Employee('Charlie Brown', 'trainee')
 print(charlie_brown)
 print(f'Base salary: ${charlie_brown.salary}')
 charlie_brown.level = 'junior'
-
-#this is still incomplete the 39th step is showing errors again and again 
