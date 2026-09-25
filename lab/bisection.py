@@ -6,7 +6,11 @@ def square_root_bisection(nums, tolerance=0.01, iterations=50):
         return nums
     
     low = 0
-    high = max(1, nums)
+    if nums < 1:
+        high = 1 
+        low = nums
+    else:
+        high = max(1, nums)
     root = None
     
     for _ in range(iterations):
